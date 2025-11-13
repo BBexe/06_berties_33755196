@@ -7,8 +7,25 @@ router.get('/search',function(req, res, next){
 });
 
 router.get('/search-result', function (req, res, next) {
-    //searching in the database
-    res.send("You searched for: " + req.query.keyword)
+    // search the database for books matching the keyword
+    const keyword = (req.query.keyword || req.query.search_text || '').trim();
+
+    if (!keyword) {
+        // no keyword provided — render an empty list
+        return res.render('list.ejs', { availableBooks: [] })
+    }
+
+    // Advanced search: partial match using LIKE. Use parameterized query to avoid SQL injection.
+    const sqlquery = "SELECT * FROM books WHERE name LIKE ?";
+    const pattern = `%${keyword}%`;
+
+    db.query(sqlquery, [pattern], (err, result) => {
+        if (err) {
+            return next(err)
+        }
+        // render a nicer results view with title and results
+        res.render('results.ejs', { availableBooks: result, title: `Search results for "${keyword}"` })
+    })
 });
 
 router.get('/list', function(req, res, next) {
@@ -22,6 +39,19 @@ router.get('/list', function(req, res, next) {
         });
 });
 
+router.get('/bargainbooks', function(req, res, next) {
+    // list names and prices for books priced less than 20
+    const sqlquery = "SELECT name, price FROM books WHERE price < ?";
+    db.query(sqlquery, [20], (err, result) => {
+        if (err) {
+            return next(err)
+        }
+        // render a nicer results view for bargain books
+        res.render('results.ejs', { availableBooks: result, title: 'Bargain books under £20' })
+    })
+});
+
 
 // Export the router object so index.js can access it
 module.exports = router
+

@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= title %> - <%= shopData.shopName %></title>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <style>
+      body { font-family: Arial, sans-serif; padding: 20px; }
+      h1 { color: #0080c9; }
+      .count { margin-bottom: 10px; color: #333; }
+      table { border-collapse: collapse; width: 100%; max-width: 800px; }
+      th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+      th { background: #f2f8fc; }
+      tr:hover { background: #f9f9f9; }
+      .empty { color: #666; font-style: italic; }
+      .actions { margin-top: 16px; }
+      .actions a { margin-right: 12px; color: #0a6fa6; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p class="count"><%= availableBooks.length %> result<%= availableBooks.length === 1 ? '' : 's' %></p>
+
+    <% if (!availableBooks || availableBooks.length === 0) { %>
+      <p class="empty">No books found.</p>
+    <% } else { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% availableBooks.forEach(function(book) { %>
+            <tr>
+              <td><%= book.name %></td>
+              <td>£<%= (book.price !== undefined && book.price !== null) ? Number(book.price).toFixed(2) : 'N/A' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    <div class="actions">
+      <a href="/books/search">Back to Search</a>
+      <a href="/books/list">View All Books</a>
+    </div>
+  </body>
+</html>
