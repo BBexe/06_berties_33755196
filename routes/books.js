@@ -15,7 +15,7 @@ router.get('/search-result', function (req, res, next) {
         return res.render('list.ejs', { availableBooks: [] })
     }
 
-    // Advanced search: partial match using LIKE. Use parameterized query to avoid SQL injection.
+    // Advanced search: partial match using LIKE.
     const sqlquery = "SELECT * FROM books WHERE name LIKE ?";
     const pattern = `%${keyword}%`;
 
