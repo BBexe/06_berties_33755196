@@ -35,7 +35,7 @@ router.get('/list', function(req, res, next) {
         if (err) {
             next(err)
         }
-        res.render("list.ejs", {availableBooks:result})
+        res.render("book_list.ejs", {availableBooks:result})
         });
 });
 
