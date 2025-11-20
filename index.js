@@ -45,8 +45,7 @@ app.use('/users', usersRoutes)
 const booksRoutes = require('./routes/books')
 app.use('/books', booksRoutes)
 
-const loginRoutes = require('./routes/login')
-app.use('/login', loginRoutes)
+
 
 // Start the web app listening
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
