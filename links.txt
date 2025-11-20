@@ -1,5 +1,1 @@
 home=https://www.doc.gold.ac.uk/usr/424/
-
-- Search form: http://localhost:8000/books/search — search for exact or partial titles.
-- Bargain books: http://localhost:8000/books/bargainbooks
-- Full list: http://localhost:8000/books/list
