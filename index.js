@@ -3,8 +3,9 @@ const express = require('express');
 const ejs = require('ejs');
 const path = require('path');
 const mysql = require('mysql2');
+var session = require ('express-session')
 
-// Load environment variables from .env file (Task 5)
+// Load environment variables from .env file 
 require('dotenv').config();
 
 // ==================================================================
@@ -22,7 +23,7 @@ if (!process.env.DB_USER) {
 // ==================================================================
 
 
-// Define the database connection pool using environment variables
+// Database connection pool using environment variables
 const db = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -40,8 +41,21 @@ global.db = db;
 const app = express();
 const port = 8000;
 
+
+
 // Tell Express that we want to use EJS as the templating engine
 app.set('view engine', 'ejs');
+
+
+// Create a session
+app.use(session({
+    secret: 'somerandomstuff',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}))
 
 // Set up the body parser to read form data
 app.use(express.urlencoded({ extended: true }));
