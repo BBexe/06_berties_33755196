@@ -16,14 +16,18 @@ router.get('/search',function(req, res, next){
 
 router.get('/search-result', function (req, res, next) {
     // search the database for books matching the keyword
-    const keyword = (req.query.keyword || req.query.search_text || '').trim();
+    // Get the search term from the query string
+    let keyword = (req.query.keyword || req.query.search_text || '').trim();
+    keyword = req.sanitize(keyword); // Sanitize the search term 
 
+    // If they didn't type anything, just show an empty list
     if (!keyword || keyword.length === 0) {
         // no keyword provided — render an empty list
         return res.render('book_list.ejs', { availableBooks: []  })
     }
 
     // Advanced search: partial match using LIKE.
+    // The % signs mean "anything can be before or after this text"
     const sqlquery = "SELECT * FROM books WHERE name LIKE ?";
     const pattern = `%${keyword}%`;
 

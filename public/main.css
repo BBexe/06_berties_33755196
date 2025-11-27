@@ -10,9 +10,11 @@ h2 {
     color: cadetblue;
 }
 
-p,li {
+p,li, .form-group{
     font-family: Arial, Helvetica, sans-serif;
+    padding: 7px;
 }
+
 
 a:link {
     color: orangered;

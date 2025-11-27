@@ -1,18 +1,69 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <title>Register for <%=shopData.shopName%></title>
     <link rel="stylesheet"  type="text/css" href="/main.css" />
-  </head>
-  <body>
+</head>
+<body>
     <h1>Register for <%=shopData.shopName%></h1>
-    <form method="POST" action="registered">
-        <p>First name: <input id="first" type="text" name="first" /></p>
-        <p>Last name: <input id="last" type="text" name="last" /></p>
-        <p>Email: <input id="email" type="email" name="email" /></p>
-        <p>Username: <input id="username" type="text" name="username" /></p>
-        <p>Password: <input id="password" type="password" name="password" /></p>
+    <form action="/users/registered" method="POST">
+
+        <div class="form-group">
+            <label for="first">First Name:</label>
+            <input type="text" id="first" name="first" value="<%= (typeof inputData !== 'undefined' && inputData.first) ? inputData.first : '' %>">
+            <% if (typeof errors !== 'undefined') { 
+                const firstError = errors.find(e => e.path === 'first'); 
+                if (firstError) { %>
+                    <span class="error-message"><%= firstError.msg %></span>
+                <% } 
+            } %>
+        </div>
+
+        <div class="form-group">
+            <label for="last">Last Name:</label>
+            <input type="text" id="last" name="last" value="<%= (typeof inputData !== 'undefined' && inputData.last) ? inputData.last : '' %>">
+            <% if (typeof errors !== 'undefined') { 
+                const lastError = errors.find(e => e.path === 'last'); 
+                if (lastError) { %>
+                    <span class="error-message"><%= lastError.msg %></span>
+                <% } 
+            } %>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="<%= (typeof inputData !== 'undefined' && inputData.username) ? inputData.username : '' %>">
+            <% if (typeof errors !== 'undefined') { 
+                const usernameError = errors.find(e => e.path === 'username'); 
+                if (usernameError) { %>
+                    <span class="error-message"><%= usernameError.msg %></span>
+                <% } 
+            } %>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="<%= (typeof inputData !== 'undefined' && inputData.email) ? inputData.email : '' %>">
+            <% if (typeof errors !== 'undefined') { 
+                const emailError = errors.find(e => e.path === 'email'); 
+                if (emailError) { %>
+                    <span class="error-message"><%= emailError.msg %></span>
+                <% } 
+            } %>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="">
+            <% if (typeof errors !== 'undefined') { 
+                const passwordError = errors.find(e => e.path === 'password'); 
+                if (passwordError) { %>
+                    <span class="error-message"><%= passwordError.msg %></span>
+                <% } 
+            } %>
+        </div>
+
         <input type="submit" value="Register" />
-      </form>
-  </body>
+    </form>
+</body>
 </html>

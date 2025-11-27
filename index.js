@@ -4,6 +4,7 @@ const ejs = require('ejs');
 const path = require('path');
 const mysql = require('mysql2');
 var session = require ('express-session')
+const expressSanitizer = require('express-sanitizer');
 
 // Load environment variables from .env file 
 require('dotenv').config();
@@ -59,6 +60,9 @@ app.use(session({
 
 // Set up the body parser to read form data
 app.use(express.urlencoded({ extended: true }));
+
+// Create an input sanitizer
+app.use(expressSanitizer());
 
 // Set up public folder (for css and static js)
 app.use(express.static(path.join(__dirname, 'public')));
