@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+    <title>Weather Forecast - <%= locals.shopData ? shopData.shopName : "Bertie's Books" %></title>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <style>
+        /* Weather page specific styles */
+        .weather-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .search-form {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .search-form input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .search-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .search-form button:hover {
+            background-color: #21867a;
+        }
+        
+        .weather-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .weather-card h2 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        
+        .weather-card .temp {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .weather-card .description {
+            font-size: 20px;
+            text-transform: capitalize;
+            margin-bottom: 20px;
+        }
+        
+        .weather-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .weather-details .detail {
+            text-align: center;
+        }
+        
+        .weather-details .label {
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+        
+        .weather-details .value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .weather-icon {
+            width: 80px;
+            height: 80px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2a9d8f;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-container">
+        <h1>Weather Forecast</h1>
+        
+        <!-- Search Form -->
+        <div class="search-form">
+            <form action="/weather/result" method="GET">
+                <label for="city">Enter a city name:</label><br><br>
+                <input type="text" id="city" name="city" placeholder="e.g. London, Paris, Tokyo" required>
+                <button type="submit">Get Weather</button>
+            </form>
+        </div>
+        
+        <!-- Error Message -->
+        <% if (error) { %>
+            <div class="error-message">
+                <strong>Error:</strong> <%= error %>
+            </div>
+        <% } %>
+        
+        <!-- Weather Results -->
+        <% if (weather) { %>
+            <div class="weather-card">
+                <h2><%= weather.city %>, <%= weather.country %></h2>
+                
+                <img class="weather-icon" 
+                     src="http://openweathermap.org/img/wn/<%= weather.icon %>@2x.png" 
+                     alt="<%= weather.description %>">
+                
+                <div class="temp"><%= weather.temp %>°C</div>
+                <div class="description"><%= weather.description %></div>
+                <div>Feels like: <%= weather.feels_like %>°C</div>
+                
+                <div class="weather-details">
+                    <div class="detail">
+                        <div class="label">Humidity</div>
+                        <div class="value"><%= weather.humidity %>%</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Wind Speed</div>
+                        <div class="value"><%= weather.wind_speed %> m/s</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Pressure</div>
+                        <div class="value"><%= weather.pressure %> hPa</div>
+                    </div>
+                    <div class="detail">
+                        <div class="label">Visibility</div>
+                        <div class="value"><%= weather.visibility %> km</div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+        
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+</body>
+</html>
