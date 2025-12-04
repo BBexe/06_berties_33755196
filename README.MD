@@ -215,7 +215,7 @@ Created a RESTful API endpoint that returns book data in JSON format for externa
 
 ```
 GET /api/books                              — All books
-GET /api/books?search=universe              — Books containing "universe"
+GET /api/books?search=world                 — Books containing "world"
 GET /api/books?minprice=5&maxprice=10       — Books priced £5-£10
 GET /api/books?sort=price                   — All books sorted by price
 GET /api/books?search=the&sort=name         — Combined filters
