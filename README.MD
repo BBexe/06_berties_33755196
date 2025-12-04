@@ -153,3 +153,81 @@ DB_NAME='berties_books'
 - All login attempts logged to audit table for security monitoring
 
 ---
+
+# Week 9: APIs and Weather Integration
+
+---
+
+## Part A: Weather Forecast Feature
+
+### What Was Implemented
+
+Added a weather forecast page that fetches real-time weather data from the OpenWeatherMap API.
+
+### New Routes
+
+| Route | Description |
+|-------|-------------|
+| `GET /weather` | Weather search form |
+| `GET /weather/result?city=London` | Weather results for a city |
+
+### Features
+
+- Search form to enter any city name
+- Displays temperature, feels like, humidity, wind speed, pressure, and visibility
+- Shows weather icon from OpenWeatherMap
+- Styled weather card with gradient background
+- Error handling for invalid cities and API errors
+
+### Dependencies Added
+
+- `request` module for making HTTP API calls
+
+### Environment Variable
+
+Added my OpenWeatherMap API key to `.env`:
+```
+
+---
+
+## Part B: Books API
+
+### What Was Implemented
+
+Created a RESTful API endpoint that returns book data in JSON format for external applications.
+
+### API Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/books` | Returns all books as JSON |
+
+### Query Parameters
+
+| Parameter | Example | Description |
+|-----------|---------|-------------|
+| `search` | `?search=world` | Filter books by name (partial match) |
+| `minprice` | `?minprice=5` | Filter books with price >= value |
+| `maxprice` | `?maxprice=10` | Filter books with price <= value |
+| `sort` | `?sort=name` or `?sort=price` | Sort results by name or price |
+
+### Example API Calls
+
+```
+GET /api/books                              — All books
+GET /api/books?search=universe              — Books containing "universe"
+GET /api/books?minprice=5&maxprice=10       — Books priced £5-£10
+GET /api/books?sort=price                   — All books sorted by price
+GET /api/books?search=the&sort=name         — Combined filters
+```
+
+
+### Difference: API vs Web Route
+
+| Feature | `/books/list` (Web) | `/api/books` (API) |
+|---------|---------------------|-------------------|
+| Response | HTML page | JSON data |
+| Purpose | For users | For applications |
+| Output | Rendered template | Raw data array |
+
+---
